@@ -15,16 +15,16 @@ jobs:
       matrix:
         os: [windows-latest]
         build-type: [Debug, Release]
+        triplet:
+        - x64-windows
+        - x86-windows
         generator: [ "Ninja" ]
       fail-fast: false
 
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Get apr
-        run: vcpkg install apr
-
-      - name: Get apr-util
-        run: vcpkg install apr-util
+      - name: Install dependencies
+        run: vcpkg install --triplet ${{ matrix.triplet }} apr apr-util 
 
       - uses: actions/checkout@v3
 
